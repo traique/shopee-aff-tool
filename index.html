@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<body style="font-family:sans-serif;text-align:center;padding:20px">
+
+<h2>Tạo link Shopee</h2>
+
+<input id="link" placeholder="Dán link Shopee..." style="width:90%;padding:10px"><br><br>
+
+<button onclick="gen()">Tạo link</button>
+
+<p id="result"></p>
+
+<button onclick="copy()">Copy</button>
+
+<script>
+async function gen(){
+  let input = document.getElementById("link").value;
+
+  let res = await fetch("/api/convert?url=" + encodeURIComponent(input));
+  let data = await res.json();
+
+  document.getElementById("result").innerText = data.affiliateLink || data.error;
+}
+
+function copy(){
+  navigator.clipboard.writeText(document.getElementById("result").innerText);
+  alert("Đã copy!");
+}
+</script>
+
+</body>
+</html>
